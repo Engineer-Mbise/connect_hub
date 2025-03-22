@@ -1,0 +1,120 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Record Keeping Application" />
+    <meta
+      name="keywords"
+      content="records,record-keeping,notes-keeping,notes,audio,videos"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="{% static 'css/style.css' %}" rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
+    />
+    <title>Login</title>
+
+    <style>
+      body {
+        background-color: #f8f9fa;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+      }
+
+      .login-container {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .login-form {
+        width: 100%;
+        max-width: 400px;
+        padding: 40px;
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      .form-group label {
+        font-weight: bold;
+      }
+
+      .form-control {
+        border-radius: 5px;
+      }
+
+      .btn-primary {
+        width: 100%;
+      }
+
+      footer {
+        background-color: #343a40;
+        color: white;
+        text-align: center;
+        padding: 20px 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="login-container">
+      <div class="login-form">
+        <h2 class="text-center mb-4">Login To Your Account</h2>
+        <p class="text-center mb-4">Enter Email and Password</p>
+        <form action="" method="POST">
+          {% csrf_token %}
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input
+              type="email"
+              name="email"
+              id="email"
+              class="form-control"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input
+              type="password"
+              name="password"
+              id="password"
+              class="form-control"
+              required
+            />
+          </div>
+          <button type="submit" class="btn btn-primary">Submit</button>
+          <div class="mt-3 text-center">
+            <p>
+              Don't Have an Account?
+              <a href="{% url 'registration' %}" style="text-decoration: none"
+                >Register</a
+              >
+            </p>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <footer class="py-3">
+      <div class="container">
+        <p class="m-0 text-center text-white">
+          Copyright &copy; Connect Hub 2025 All Rights Reserved
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>

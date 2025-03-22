@@ -1,0 +1,43 @@
+{% extends './base.html' %} {% block content %}
+
+<div class="container mt-5">
+  <h2 class="text-center mb-4">Available Modules</h2>
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+    {% for module in modules %}
+    <div class="col">
+      <a
+        href="{% url 'list_of_filtered_discussions' module.name %}"
+        class="text-decoration-none"
+        data-bs-toggle="tooltip"
+        data-bs-placement="top"
+        title="Click to explore discussions for this module!"
+      >
+        <div
+          class="card p-3 {% cycle 'card-lightblue' 'card-green' 'card-teal' 'card-cyan' %}"
+        >
+          <div class="card-body">
+            <h5 class="card-title text-primary">
+              <strong>{{ module.name }}</strong>
+            </h5>
+            <p class="card-text text-dark">{{ module.description }}</p>
+          </div>
+        </div>
+      </a>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+<!-- Enable Bootstrap Tooltips -->
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var tooltipTriggerList = [].slice.call(
+      document.querySelectorAll('[data-bs-toggle="tooltip"]')
+    );
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+      return new bootstrap.Tooltip(tooltipTriggerEl);
+    });
+  });
+</script>
+
+{% endblock content %}
