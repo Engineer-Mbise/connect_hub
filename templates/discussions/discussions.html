@@ -25,7 +25,7 @@
           <a
             href="#"
             class="btn btn-sm btn-primary text-decoration-none"
-            onclick="joinMeeting('{{ discussion.title }}')"
+            onclick="joinMeeting('{{ discussion.pk }}')"
             >Join</a
           >
           <a href="#" class="btn btn-sm btn-success text-decoration-none"
@@ -34,15 +34,17 @@
         </div>
       </td>
     </tr>
-    {% endfor %}<br />
-    {% endif %}
+    {% endfor %} {% endif %}
   </tbody>
 </table>
 
 <div id="jitsi-container" style="height: 500px"></div>
 
+<script src="https://meet.jit.si/external_api.js"></script>
+
 <script>
   function joinMeeting(meetingId) {
+    // Create a meeting using the meetingId (discussion primary key)
     const domain = "meet.jit.si";
     const options = {
       roomName: meetingId,
@@ -50,45 +52,22 @@
       height: "100%",
       parentNode: document.querySelector("#jitsi-container"),
       configOverwrite: {
-        startWithAudioMuted: true,
-        startWithVideoMuted: false,
-        enableLobbyChat: false,
         prejoinPageEnabled: false,
+        startWithAudioMuted: true,
+        startWithVideoMuted: true,
+        enableLobbyChat: false,
         hideLobbyButton: true,
         enableWelcomePage: false,
-        disableDeepLinking: true,
-        disableModeration: true,
-        autoAcceptInvites: true,
-      },
-      interfaceConfigOverwrite: {
-        filmStripOnly: false,
-        DISABLE_VIDEO_BACKGROUND: true,
-        SHOW_JITSI_WATERMARK: false,
       },
     };
 
     try {
       const api = new JitsiMeetExternalAPI(domain, options);
-      api.addEventListener("readyToClose", () => {
-        console.log("Jitsi Meet closed");
-      });
-      api.addEventListener("videoConferenceJoined", () => {
-        console.log("Jitsi Meet joined");
-      });
-      api.addEventListener("videoConferenceLeft", () => {
-        console.log("Jitsi Meet left");
-      });
-      api.addEventListener("participantJoined", (participant) => {
-        console.log("Participant joined: ", participant);
-      });
-      api.addEventListener("participantLeft", (participant) => {
-        console.log("Participant left: ", participant);
-      });
-      api.addEventListener("log", (log) => {
-        console.log("Jitsi Meet log: ", log);
-      });
     } catch (error) {
       console.error("Error loading Jitsi Meet: ", error);
+      // Optionally, display an error message to the user.
+      document.getElementById("jitsi-container").innerHTML =
+        "<p>Failed to load the meeting.</p>";
     }
   }
 </script>
